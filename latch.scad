@@ -1,8 +1,12 @@
+include <config.scad>
+
 $fn = 100;
-width = 40;
-depth = 40;
-height = 15;
-wallThickness = 1.5;
+// Note that width and depth are swapped between
+// IFBox and IFBracket.  Funny old world, inn´t?
+width = BoxW;
+depth = BoxD;
+height = BoxH;
+wallThickness = 5;
 hingeOuter = 7;
 hingeInner = 3;
 hingeInnerSlop = .5;
@@ -10,7 +14,7 @@ hingeFingerSlop = .4;
 fingerLength = hingeOuter/1.65;
 fingerSize = 6.8;
 topFingerSize = fingerSize;
-latchWidth = 15;
+latchWidth = 30;
 
 bottom();
 top();
@@ -30,36 +34,70 @@ module bottom() {
 		}
 
 		// new latch
-		difference() {
-			hull() {
-					translate([-(fingerLength*2) - width,-latchWidth,height-2.25]) {
-						rotate([-90,0,0]) {
-							cylinder(r = hingeOuter/2, h = latchWidth*2);
-						}
-					}
-					translate([-width - fingerLength, -latchWidth, height-hingeOuter-2.25]) {
-						cube([.1, latchWidth * 2, hingeOuter]);
-					}
-					translate([-(fingerLength*2) -width, -latchWidth,height-2.25]){
-							cube([fingerLength,latchWidth * 2,.1]);
-						}
-						translate([-(fingerLength*2) -width, -latchWidth,height-2.25]){
-							rotate([0,-20,0]) {
-								cube([hingeOuter-wallThickness,latchWidth*2,.01]);
-							}
-						}
-				}
-			translate([-(fingerLength*3) - width, -(latchWidth/2) - hingeFingerSlop,0]) {
+        translate([0, depth/4, 0]) {
+            difference() {
+                hull() {
+                    translate([-(fingerLength*2) - width,-latchWidth,height-2.25]) {
+                        rotate([-90,0,0]) {
+                            cylinder(r = hingeOuter/2, h = latchWidth*2);
+                        }
+                    }
+                    translate([-width - fingerLength, -latchWidth, height-hingeOuter-2.25]) {
+                        cube([.1, latchWidth * 2, hingeOuter]);
+                    }
+                    translate([-(fingerLength*2) -width, -latchWidth,height-2.25]){
+                        cube([fingerLength,latchWidth * 2,.1]);
+                    }
+                    translate([-(fingerLength*2) -width, -latchWidth,height-2.25]){
+                        rotate([0,-20,0]) {
+                            cube([hingeOuter-wallThickness,latchWidth*2,.01]);
+                        }
+                    }
+                }
+                translate([-(fingerLength*3) - width, -(latchWidth/2) - hingeFingerSlop,0]) {
 					cube([fingerLength*3, latchWidth + hingeFingerSlop * 2,height*2]);
-			}
-		}
-		// latch rod
-		translate([-(fingerLength*2) -width, -latchWidth/2 - hingeFingerSlop, height-2.25]) {
-			rotate([-90,0,0]) {
-				cylinder(r = hingeInner /2, h = latchWidth + (hingeFingerSlop*2));
-			}
-		}
+                }
+            }
+            // latch rod
+            translate([-(fingerLength*2) -width, -latchWidth/2 - hingeFingerSlop, height-2.25]) {
+                rotate([-90,0,0]) {
+                    cylinder(r = hingeInner /2, h = latchWidth + (hingeFingerSlop*2));
+                }
+            }
+        }
 
+		// new latch
+        translate([0, -depth/4, 0]) {
+            difference() {
+                hull() {
+                    translate([-(fingerLength*2) - width,-latchWidth,height-2.25]) {
+                        rotate([-90,0,0]) {
+                            cylinder(r = hingeOuter/2, h = latchWidth*2);
+                        }
+                    }
+                    translate([-width - fingerLength, -latchWidth, height-hingeOuter-2.25]) {
+                        cube([.1, latchWidth * 2, hingeOuter]);
+                    }
+                    translate([-(fingerLength*2) -width, -latchWidth,height-2.25]){
+                        cube([fingerLength,latchWidth * 2,.1]);
+                    }
+                    translate([-(fingerLength*2) -width, -latchWidth,height-2.25]){
+                        rotate([0,-20,0]) {
+                            cube([hingeOuter-wallThickness,latchWidth*2,.01]);
+                        }
+                    }
+                }
+                translate([-(fingerLength*3) - width, -(latchWidth/2) - hingeFingerSlop,0]) {
+					cube([fingerLength*3, latchWidth + hingeFingerSlop * 2,height*2]);
+                }
+            }
+            // latch rod
+            translate([-(fingerLength*2) -width, -latchWidth/2 - hingeFingerSlop, height-2.25]) {
+                rotate([-90,0,0]) {
+                    cylinder(r = hingeInner /2, h = latchWidth + (hingeFingerSlop*2));
+                }
+            }
+        }
 		difference() {
 			hull() {
 				translate([0,-depth/2,height]) {
@@ -112,27 +150,52 @@ module top() {
 		}
 
 		// new latch
-		difference() {
+        translate([0, depth/4, 0])
+            difference() {
 			hull() {
-					translate([(fingerLength*2) + width,-latchWidth,height/2]) {
-						rotate([-90,0,0]) {
-							cylinder(r = hingeOuter/2, h = latchWidth*2);
-						}
-					}
-					translate([width + fingerLength, -latchWidth, 0]) {
-						cube([.1, latchWidth * 2, hingeOuter]);
-					}
-					translate([fingerLength + width, -latchWidth,height/2]){
-						cube([fingerLength,latchWidth * 2,.1]);
-					}
-					translate([fingerLength + width, -latchWidth,(height/2) + (hingeOuter/1.5)]){
-						rotate([0,45,0]) {
-							cube([hingeOuter,latchWidth*2,.01]);
-						}
-					}
+                translate([(fingerLength*2) + width,-latchWidth,height/2]) {
+                    rotate([-90,0,0]) {
+                        cylinder(r = hingeOuter/2, h = latchWidth*2);
+                    }
+                }
+                translate([width + fingerLength, -latchWidth, 0]) {
+                    cube([.1, latchWidth * 2, hingeOuter]);
+                }
+                translate([fingerLength + width, -latchWidth,height/2]){
+                    cube([fingerLength,latchWidth * 2,.1]);
+                }
+                translate([fingerLength + width, -latchWidth,(height/2) + (hingeOuter/1.5)]){
+                    rotate([0,45,0]) {
+                        cube([hingeOuter,latchWidth*2,.01]);
+                    }
+                }
 			}
 			translate([fingerLength + width, -(latchWidth/2) - hingeFingerSlop,0]) {
-					cube([fingerLength*2, latchWidth + (hingeFingerSlop * 2),height*2]);
+                cube([fingerLength*2, latchWidth + (hingeFingerSlop * 2),height*2]);
+			}
+		}
+        translate([0, -depth/4, 0])
+            difference() {
+			hull() {
+                translate([(fingerLength*2) + width,-latchWidth,height/2]) {
+                    rotate([-90,0,0]) {
+                        cylinder(r = hingeOuter/2, h = latchWidth*2);
+                    }
+                }
+                translate([width + fingerLength, -latchWidth, 0]) {
+                    cube([.1, latchWidth * 2, hingeOuter]);
+                }
+                translate([fingerLength + width, -latchWidth,height/2]){
+                    cube([fingerLength,latchWidth * 2,.1]);
+                }
+                translate([fingerLength + width, -latchWidth,(height/2) + (hingeOuter/1.5)]){
+                    rotate([0,45,0]) {
+                        cube([hingeOuter,latchWidth*2,.01]);
+                    }
+                }
+			}
+			translate([fingerLength + width, -(latchWidth/2) - hingeFingerSlop,0]) {
+                cube([fingerLength*2, latchWidth + (hingeFingerSlop * 2),height*2]);
 			}
 		}
 		// latch rod
@@ -184,6 +247,7 @@ module top() {
 }
 
 module bottomLatch() {
+    translate([0, dept])
 	difference() {
 		union() {
 			hull() {

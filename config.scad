@@ -12,6 +12,10 @@ CompartmentW=50;
 CompartmentD=0;
 CompartmentH=0;
 
-BoxW = DevW + CompartmentW;
-BoxD = DevD + CompartmentD;
-BoxH = DevH + CompartmentH;
+PaddingW = 5;
+PaddingD = 5;
+PaddingH = 5;
+
+BoxW = DevW + CompartmentW + PaddingW;
+BoxD = DevD + CompartmentD + PaddingD;
+BoxH = DevH + CompartmentH + PaddingH;
